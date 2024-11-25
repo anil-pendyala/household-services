@@ -81,17 +81,6 @@ def unauthorized():
 def show_home():
     return render_template('about.html')
 
-# @app.route('/test', methods=['GET', 'POST'])
-# def test():
-#     username = request.form.get('username', 'Not Provided')
-#     password = request.form.get('password', 'Not Provided')
-
-#     return f'<h1>Welcome {username}!</h1><br>Username: {username}<br>Password: {password}'
-
-# @app.route('/customer')
-# def show_customer():
-#     flash('Hello!')
-#     return 'Welcome to customer!'
 
 @app.route('/customer/register', methods = ['GET', 'POST'])
 def register_customer():
@@ -173,26 +162,6 @@ def register_professional():
 def show_status():
     return render_template('/professional/prof_register_request.html')
 
-
-# @app.route('/customer/home', methods = ['GET', 'POST'])
-# def show_customer_home():
-#     customer_email = request.form.get('email')
-#     customer_password = request.form.get('password')
-#     customer_name = request.form.get('fullname')
-#     customer_address = request.form.get('address')
-#     customer_pincode = request.form.get('pincode')
-#     return f'Email: {customer_email}<br>Password: {customer_password}<br>Name: {customer_name}<br>Address: {customer_address}<br>Pincode: {customer_pincode}'
-
-# @app.route('/professional/home', methods = ['GET', 'POST'])
-# def show_professional_home():
-#     professional_email = request.form.get('email')
-#     professional_password = request.form.get('password')
-#     professional_name = request.form.get('fullname')
-#     service = request.form.get('service_name')
-#     experience = request.form.get('experience')
-#     professional_address = request.form.get('address')
-#     professional_pincode = request.form.get('pincode')
-#     return f'{professional_email}<br>{professional_password}<br>{professional_name}<br>{service}<br>{experience}<br>{professional_address}<br>{professional_pincode}'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
