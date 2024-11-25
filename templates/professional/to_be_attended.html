@@ -24,24 +24,24 @@
         <table class="table table-bordered table-striped mt-3">
             <thead class="table-success">
                 <tr>
+                    <th>Date</th>
+                    <th>Time</th>
                     <th>Service Requirements</th>
                     <th>Customer Name</th>
                     <th>Customer Address</th>
-                    <th>Pincode</th>
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Pincode</th>                 
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for request, customer in to_be_attended_requests %}
                 <tr>
+                    <td>{{ request.service_date }}</td>
+                    <td>{{ request.service_time | capitalize }}</td>
                     <td>{{ request.requirements }}</td>
                     <td>{{ customer.name }}</td>
                     <td>{{ customer.address }}</td>
                     <td>{{ customer.pincode }}</td>
-                    <td>{{ request.service_date }}</td>
-                    <td>{{ request.service_time | capitalize }}</td>
                     <td>
                         <!-- Fulfilled button with confirmation -->
                         <form action="/professional/fulfill_request/{{ request.request_id }}" method="POST" style="display:inline;" onsubmit="return confirmFulfill('{{ request.requirements }}')">

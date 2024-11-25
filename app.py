@@ -20,20 +20,21 @@ def role_required(role):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            user_role = session['user_role']  # Get the role from the session
+            user_role = session.get('user_role', 'guest')  # Get the role from the session
             if user_role != role:  # If the user's role does not match the required role
                 flash("You do not have permission to access that page.", "danger")
-                
                 # Redirect user to their corresponding dashboard
-                if user_role == 'customer':
-                    return redirect('/customer/dashboard')  # Redirect customer to customer dashboard
-                elif user_role == 'professional':
-                    return redirect('/professional/dashboard')  # Redirect professional to professional dashboard
-                else:
-                    return redirect('/')
+                if user_role != 'guest':
+                    return redirect(f'/{user_role}/dashboard')
+                return redirect('/login')
+                # if user_role == 'customer':
+                #     return redirect('/customer/dashboard')  # Redirect customer to customer dashboard
+                # elif user_role == 'professional':
+                #     return redirect('/professional/dashboard')  # Redirect professional to professional dashboard
+                # elif user_role == 'guest':
+                #     return redirect('/')
 
                 # Optional: Add a fallback redirect if the user role is not recognized
-                return redirect(url_for('unauthorized'))  # Fallback for undefined roles
             return func(*args, **kwargs)
         return wrapper
     return decorator
@@ -72,14 +73,10 @@ def get_user_role():
     else:
         return 'guest'
     
-    
-@app.route('/unauthorized')
-def unauthorized():
-    return render_template('unauthorized.html')
 
 @app.route('/', methods = ['GET', 'POST'])
 def show_home():
-    return render_template('about.html')
+    return render_template('home.html')
 
 
 @app.route('/customer/register', methods = ['GET', 'POST'])
@@ -260,12 +257,12 @@ def show_navbar():
 def logout():
     if request.method == 'POST':
         session.clear()
-        return redirect('/about')
+        return redirect('/')
     return render_template('logout.html')
 
 @app.route('/about')
 def show_about():
-    return render_template('about.html')
+    return render_template('home.html')
 
 @app.route('/customer/list_services', methods=['GET', 'POST'])
 @role_required('customer')
@@ -1043,8 +1040,8 @@ def fulfilled_requests():
 
     # Fetch fulfilled requests for this professional
     fulfilled_requests = (
-        db.session.query(Requests, Services.service_name)
-        .join(Services, Requests.service_id == Services.service_id)
+        db.session.query(Requests, Customers)
+        .join(Customers, Requests.customer_id == Customers.customer_id)
         .filter(Requests.professional_id == professional_id, Requests.status.in_(['Fulfilled', 'Closed']))
         .all()
     )

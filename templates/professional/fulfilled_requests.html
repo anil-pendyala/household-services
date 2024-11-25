@@ -24,19 +24,23 @@
         <table class="table table-bordered table-striped mt-3">
             <thead class="table-primary">
                 <tr>
-                    <th>Service Name</th>
-                    <th>Request Requirements</th>
                     <th>Service Date</th>
                     <th>Service Time</th>
+                    <th>Service Requirements</th>
+                    <th>Customer Name</th>
+                    <th>Customer Address</th>
+                    <th>Pincode</th>
                 </tr>
             </thead>
             <tbody>
-                {% for request, service_name in fulfilled_requests %}
+                {% for request, customer in fulfilled_requests %}
                 <tr>
-                    <td>{{ service_name }}</td>
-                    <td>{{ request.requirements }}</td>
                     <td>{{ request.service_date }}</td>
                     <td>{{ request.service_time | capitalize }}</td>
+                    <td>{{ request.requirements }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.pincode }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
