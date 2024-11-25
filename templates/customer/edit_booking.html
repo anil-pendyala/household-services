@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary">Edit Booking</h2>
+    <div class="card p-4 mx-auto" style="max-width: 500px;">
+        <form action="/customer/edit_booking/{{ booking.request_id }}" method="POST">
+            <div class="mb-3">
+                <label for="service-type" class="form-label">Service Type</label>
+                <select class="form-select" name="service-type" id="service-type" required>
+                    <option value="" disabled>Select a Service Type</option>
+                    {% for service in services %}
+                    <option value="{{ service.service_id }}" {% if service.service_id == booking.service_id %}selected{% endif %}>
+                        {{ service.service_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Request Requirements</label>
+                <textarea class="form-control" name="description" id="description" rows="3" required>{{ booking.requirements }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Preferred Date</label>
+                <input type="date" class="form-control" name="date" id="date" value="{{ booking.service_date }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="time" class="form-label">Preferred Time</label>
+                <select class="form-select" name="time" id="time" required>
+                    <option value="" disabled>Select Preferred Time</option>
+                    <option value="morning" {% if booking.service_time == 'morning' %}selected{% endif %}>Morning (8:00 - 12:00)</option>
+                    <option value="afternoon" {% if booking.service_time == 'afternoon' %}selected{% endif %}>Afternoon (12:00 - 16:00)</option>
+                    <option value="evening" {% if booking.service_time == 'evening' %}selected{% endif %}>Evening (16:00 - 20:00)</option>
+                </select>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="/customer/dashboard" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary">Customer Dashboard</h2>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="mt-4">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Pending Bookings Section -->
+    <div class="mt-4">
+        <h3>Pending Requests</h3>
+        {% if active_bookings %}
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="table-primary">
+                <tr>
+                    <th>Service Name</th>
+                    <th>Request Requirements</th>
+                    <th>Professional Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request, service_name, professional_name in active_bookings %}
+                <tr>
+                    <td>{{ service_name }}</td>
+                    <td>{{ request.requirements }}</td>
+                    <td>{{ professional_name if professional_name else "Pending Assignment" }}</td>
+                    <td>{{ request.service_date }}</td>
+                    <td>{{ request.service_time | capitalize }}</td>
+                    <td>{{ request.status }}</td>
+                    <td>
+                        {% if request.status == 'Pending' %}
+                            <!-- Edit button -->
+                            <a href="/customer/edit_booking/{{ request.request_id }}" class="btn btn-warning btn-sm">Edit</a>
+
+                            <!-- Cancel Request button -->
+                            <form action="/customer/cancel_booking/{{ request.request_id }}" method="POST" class="d-inline" onsubmit="return confirmCancel('{{ service_name }}')">
+                                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                            </form>
+                        {% elif request.status == 'Fulfilled' %}
+                            <!-- Service Finished button -->
+                            <a href="/customer/service_remarks/{{ request.request_id }}" class="btn btn-success btn-sm">Service Finished</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No pending requests. <a href="/customer/list_services" class="text-primary">Book a service now!</a></p>
+        {% endif %}
+    </div>
+
+    <!-- Closed Bookings Section -->
+    <div class="mt-5">
+        <h3>Closed Requests</h3>
+        {% if closed_bookings %}
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Service Name</th>
+                    <th>Request Requirements</th>
+                    <th>Professional Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request, service_name, professional_name in closed_bookings %}
+                <tr>
+                    <td>{{ service_name }}</td>
+                    <td>{{ request.requirements }}</td>
+                    <td>{{ professional_name if professional_name else "Not Assigned" }}</td>
+                    <td>{{ request.service_date }}</td>
+                    <td>{{ request.service_time | capitalize }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No closed requests.</p>
+        {% endif %}
+    </div>
+
+    <!-- Quick Links Section -->
+    <div class="mt-5 text-center">
+        <a href="/customer/list_services" class="btn btn-primary">Book a New Service</a>
+    </div>
+</div>
+
+<script>
+    // Confirm before canceling
+    function confirmCancel(serviceName) {
+        return confirm("Are you sure you want to cancel the booking for " + serviceName + "?");
+    }
+</script>
+{% endblock %}

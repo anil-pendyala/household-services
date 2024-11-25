@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary">To Be Attended Requests</h2>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="mt-4">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- To Be Attended Requests Table -->
+    <div class="mt-4">
+        {% if to_be_attended_requests %}
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="table-success">
+                <tr>
+                    <th>Service Requirements</th>
+                    <th>Customer Name</th>
+                    <th>Customer Address</th>
+                    <th>Pincode</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request, customer in to_be_attended_requests %}
+                <tr>
+                    <td>{{ request.requirements }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.pincode }}</td>
+                    <td>{{ request.service_date }}</td>
+                    <td>{{ request.service_time | capitalize }}</td>
+                    <td>
+                        <!-- Fulfilled button with confirmation -->
+                        <form action="/professional/fulfill_request/{{ request.request_id }}" method="POST" style="display:inline;" onsubmit="return confirmFulfill('{{ request.requirements }}')">
+                            <button type="submit" class="btn btn-success btn-sm">Fulfilled</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No requests to attend yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    // Confirm before marking the service as fulfilled
+    function confirmFulfill(serviceName) {
+        return confirm("Are you sure you want to mark the service '" + serviceName + "' as fulfilled?");
+    }
+</script>
+
+{% endblock %}

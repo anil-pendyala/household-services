@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="contact-container">
+    <header>
+        <h1>Contact Us</h1>
+        <p>Have questions or need assistance? Reach out to us using the details below.</p>
+    </header>
+    <main class="contact-details">
+        <p>Email: <span class="contact-info">contact@gharseva.com</span></p>
+        <p>Phone: <span class="contact-info">+91 - 12345 67890</span></p>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ghar Seva. All rights not reserved.</p>
+    </footer>
+</div>
+
+<style>
+    /* General styles */
+    body {
+        margin: 0;
+        font-family: 'Georgia', serif;
+        color: #333;
+        background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+    }
+
+    /* Contact container */
+    .contact-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    /* Header */
+    header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        color: #3c3c3c;
+    }
+
+    header p {
+        margin-top: 10px;
+        color: #666;
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
+
+    /* Contact Details */
+    .contact-details {
+        margin-top: 20px;
+    }
+
+    .contact-details p {
+        font-size: 1.2rem;
+        margin: 10px 0;
+    }
+
+    .contact-info {
+        color: #007bff; /* Blue color for email and phone */
+        font-weight: bold;
+    }
+
+    /* Footer */
+    footer {
+        margin-top: 30px;
+        font-size: 0.9rem;
+        color: #777;
+    }
+</style>
+{% endblock %}

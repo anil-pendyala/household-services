@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center text-center" 
+     style="min-height: 100vh; padding: 0; margin: 0; overflow: hidden; background: none;">
+
+    <!-- Centered Card for Main Content -->
+    <div class="card border-0 shadow-lg rounded-4 p-4" style="max-width: 500px; width: 100%; background-color: #ffffff; opacity: 0.95;">
+        <h1 class="display-4 fw-bold mb-4" style="font-family: 'Montserrat', sans-serif; color: #333; font-size: 2.5rem; line-height: 1.2;">
+            Welcome to Ghar Seva
+        </h1>
+        <p class="lead mb-4" style="font-size: 1.25rem; color: #555; font-weight: 400; line-height: 1.6;">
+            In today’s fast-paced world, managing home services can often feel overwhelming—whether you're a busy professional seeking reliable help or a customer needing assistance for everyday tasks. Ghar Seva is here to change that by offering a seamless platform that brings together professionals and customers, ensuring that every home service is just a few clicks away.
+        </p>
+        
+        <!-- Login Button -->
+        <div class="mb-4">
+            <a href="/login" class="btn btn-primary btn-lg px-4 py-3 rounded-pill" 
+               style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; 
+                      transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                Login
+            </a>
+        </div>
+
+        <!-- Register Buttons with Hover Effects and Rounded Corners -->
+        <div class="d-flex justify-content-center gap-4">
+            <a href="/customer/register" class="btn btn-outline-primary btn-lg px-4 py-3 rounded-pill" 
+               style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; 
+                      transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                Register as Customer
+            </a>
+            <a href="/professional/register" class="btn btn-outline-primary btn-lg px-4 py-3 rounded-pill" 
+               style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; 
+                      transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                Register as Professional
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

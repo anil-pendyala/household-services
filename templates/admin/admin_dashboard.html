@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary">Manage Professional Registrations</h2>
+
+    <!-- Table of Professionals -->
+    <table class="table table-bordered table-striped mt-4">
+        <thead class="table-primary">
+            <tr>
+                <th>Professional Name</th>
+                <th>Email</th>
+                <th>Service</th>
+                <th>Experience (Years)</th>
+                <th>Document Link</th>
+                <th>Pincode</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for professional, service_name in professionals %}
+            <tr>
+                <td>{{ professional.name }}</td>
+                <td>{{ professional.email }}</td>
+                <td>{{ service_name }}</td>
+                <td>{{ professional.experience }}</td>
+                <td><a href="{{ professional.doc_link }}" target="_blank">{{ professional.doc_link }}</a></td>
+                <td>{{ professional.pincode }}</td>
+                <td class="text-center">
+                    <div class="d-flex justify-content-center">
+                        <!-- Approve button with confirmation -->
+                        <form action="{{ url_for('approve_professional', professional_id=professional.professional_id) }}" method="POST" style="margin-right: 5px;" onsubmit="return confirmApprove('{{ professional.name|escape }}')">
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                        <!-- Reject button with confirmation -->
+                        <form action="{{ url_for('reject_professional', professional_id=professional.professional_id) }}" method="POST" onsubmit="return confirmReject('{{ professional.name|escape }}')">
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function confirmReject(professionalName) {
+        return confirm("Are you sure you want to reject: " + professionalName + "?");
+    }
+
+    function confirmApprove(professionalName) {
+        return confirm("Are you sure you want to approve: " + professionalName + "?");
+    }
+</script>
+{% endblock %}

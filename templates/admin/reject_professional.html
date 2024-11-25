@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-danger">Are you sure you want to reject this professional?</h2>
+    <div class="text-center">
+        <form action="/reject_professional/{{ professional_id }}" method="POST">
+            <a href="/admin/dashboard" class="btn btn-secondary btn-lg">Cancel</a>
+            <button type="submit" class="btn btn-danger btn-lg">Yes, Reject</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

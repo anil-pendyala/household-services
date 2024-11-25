@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="card p-4" style="width: 100%; max-width: 400px;">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div>
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message|safe }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Login Form -->
+        <h2 class="text-center">Login</h2>
+        <form action="/login" method="POST">
+            <div class="mb-3">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Email ID (Username)" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Log in</button>
+        </form>
+        <div class="text-center mt-4">
+            <p>New user?</p>
+            <a href="/customer/register">Register as Customer</a><br>
+            <a href="/professional/register">Register as Service Professional</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

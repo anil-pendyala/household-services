@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Profile Page Styling */
+    .card {
+        border-radius: 15px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        border-radius: 15px 15px 0 0;
+        padding: 20px;
+        background-color: #007bff;
+        color: white;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-footer {
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 0 0 15px 15px;
+    }
+
+    h4, h5 {
+        font-weight: bold;
+        color: #333;
+    }
+
+    p {
+        color: #555;
+        font-size: 1.1rem;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 1rem;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+    .text-primary {
+        color: #007bff !important;
+    }
+
+    .text-warning {
+        color: #ffc107 !important;
+    }
+
+    .text-info {
+        color: #17a2b8;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Professional Profile Card -->
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>{{ professional.Professionals.name }}'s Profile</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Profile Info -->
+                    <div class="mb-4">
+                        <h4>Service: <span class="text-primary">{{ professional.service_name }}</span></h4>
+                        <p><strong>Services Attended:</strong> {{ services_attended }}</p>
+                        <p><strong>Rating:</strong> <span class="text-warning">{{ rating }} &#9733;</span></p>
+                    </div>
+                    <hr>
+                    <!-- Contact Info -->
+                    <div class="mb-4">
+                        <h5>Contact Information</h5>
+                        <p><strong>Email:</strong> {{ professional.Professionals.email }}</p>
+                        <p><strong>Location:</strong> {{ professional.Professionals.address }}, {{ professional.Professionals.pincode }}</p>
+                    </div>
+                    <hr>
+                    <!-- Services & Experience -->
+                    <div>
+                        <h5>Experience</h5>
+                        <p><strong>Experience:</strong> {{ professional.Professionals.experience }} years</p>
+                        <p><strong>Documents:</strong> <a href="{{ professional.Professionals.doc_link }}" target="_blank" class="text-info">View Documents</a></p>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/professional/dashboard" class="btn btn-primary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

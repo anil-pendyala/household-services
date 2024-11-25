@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Service{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <h2 class="text-center text-primary">Add New Service</h2>
+  <div class="card p-4 mx-auto" style="max-width: 500px;">
+    <form action="/admin/addnew" method="POST">
+      <div class="mb-3">
+        <!-- <label for="service_name" class="form-label"><strong>Service Name</strong></label> -->
+        <input type="text" class="form-control" id="service_name" name="service_name" placeholder="Service Name" required>
+      </div>
+      <div class="mb-3">
+        <!-- <label for="description" class="form-label"><strong>Service Description</strong></label> -->
+        <textarea class="form-control" id="description" name="description" placeholder="Service Description" rows="4" required></textarea>
+      </div>
+      <div class="mb-3">
+        <!-- <label for="base_price" class="form-label"><strong>Base Price</strong></label> -->
+        <input type="number" class="form-control" id="base_price" name="base_price" placeholder="Base Price" required min="0" step="0.01">
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Add Service</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

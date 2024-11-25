@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Card styling */
+    .card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+    }
+
+    .card h5, .card p {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .card h5 strong {
+        color: #007bff;
+    }
+
+    /* Button styling */
+    .btn {
+        border-radius: 25px;
+        padding: 12px 25px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    /* Input and label styling */
+    .form-label {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #555;
+    }
+
+    /* Radio buttons styling */
+    .form-check-input {
+        accent-color: #007bff;
+        transform: scale(1.2);
+        margin-right: 10px;
+    }
+
+    .form-check-label {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #555;
+    }
+
+    /* Container adjustments */
+    .container {
+        max-width: 700px;
+        margin: 30px auto;
+    }
+
+    /* Center align for the page title */
+    h2 {
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container">
+    <h2 class="text-center text-primary">Service Feedback</h2>
+
+    <div class="card mt-4">
+        <h5><strong>Service Name:</strong> {{ service_name }}</h5>
+        <p><strong>Service Requirements:</strong> {{ requirements }}</p>
+        <p><strong>Service Date:</strong> {{ service_date }}</p>
+        <p><strong>Professional Name:</strong> {{ professional_name }}</p>
+
+        <form action="/customer/service_remarks/{{ request_id }}" method="POST" class="mt-4">
+            <div class="mb-3">
+                <label for="rating" class="form-label">Rate the Service</label>
+                <div class="d-flex align-items-center">
+                    {% for i in range(1, 6) %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rating" id="rating{{ i }}" value="{{ i }}" required>
+                        <label class="form-check-label" for="rating{{ i }}">{{ i }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Submit Rating</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center text-primary mb-4">Available Services</h2>
+
+        <!-- Search Form -->
+        <form action="/services" method="GET" class="search-form">
+            <div class="input-group">
+                <!-- Search Input -->
+                <input type="text" class="form-control search-input" name="search" 
+                       placeholder="Search services..."
+                       value="{{ search_query }}" aria-label="Search services">
+                <button type="submit" class="btn btn-primary search-btn">Search</button>
+                <a href="/services" class="clear-search-btn">Clear Search</a>
+            </div>
+        </form>
+
+        <!-- Services Table -->
+        <table class="table table-bordered mt-5">
+            <thead class="table-primary">
+                <tr>
+                    <th>Service Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr>
+                    <td><strong>{{ service.service_name }}</strong></td>
+                    <td>{{ service.description }}</td>
+                    <td>{{ service.base_price }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">No services found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        /* Search Form Styling */
+        .search-form {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .search-input {
+            border-radius: 20px 0 0 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px 15px;
+            font-size: 14px;
+            width: 250px;
+            border: 2px solid #0060c7; /* Border around input */
+        }
+
+        .search-btn {
+            border-radius: 0 20px 20px 0;
+            padding: 10px 20px;
+            background-color: #0060c7;
+            color: white;
+            border: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #0052a3;
+        }
+
+        .clear-search-btn {
+            font-size: 14px;
+            text-decoration: none;
+            color: #0060c7;
+            padding: 10px 15px;
+            border: 2px solid #0060c7;
+            border-radius: 20px;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .clear-search-btn:hover {
+            background-color: #0060c7;
+            color: white;
+            border-color: #0052a3;
+            box-shadow: 0 0 10px rgba(0, 82, 163, 0.5);
+        }
+
+        /* Table Styling */
+        table {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            text-align: center;
+            background-color: #e8f0fe;
+            font-weight: 600;
+        }
+
+        td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        /* Container Padding Adjustment */
+        .container {
+            position: relative;
+        }
+    </style>
+{% endblock %}

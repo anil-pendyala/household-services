@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center text-primary" style="font-size: 32px;">Book a Service</h2>
+        <div class="card p-4 mx-auto" style="max-width: 400px;">
+            <form action="/customer/book_service" method="POST">
+                <div class="mb-3">
+                    <label for="service-type" class="form-label">Select a Service</label>
+                    <select class="form-select" name="service-type" id="service-type" required>
+                        <option value="" disabled {% if not selected_service %}selected{% endif %}>Select a Service Type</option>
+                        {% for service in services %}
+                        <option value="{{ service.service_name }}" {% if service.service_name == selected_service %}selected{% endif %}>
+                            {{ service.service_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" name="description" rows="3" placeholder="Describe the Service Requirements" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="date" class="form-label">Preferred Date for Service</label>
+                    <input type="date" class="form-control" name="date" id="date" required>
+                </div>
+                <div class="mb-3">
+                    <label for="time-select" class="form-label">Preferred Time</label>
+                    <select class="form-select" name="time" id="time-select" required>
+                        <option value="" disabled selected>Select Preferred Time</option>
+                        <option value="morning">Morning (8:00 - 12:00)</option>
+                        <option value="afternoon">Afternoon (12:00 - 16:00)</option>
+                        <option value="evening">Evening (16:00 - 20:00)</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+
+        h2 {
+            font-size: 32px; /* Increased font size */
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+    </style>
+{% endblock %}
